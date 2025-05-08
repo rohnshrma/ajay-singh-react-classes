@@ -13,7 +13,7 @@ const Header = (props) => {
   // The return statement specifies what the component will render on the screen
   return (
     // Rendering an h1 element that displays the "text" prop and the current date
-    <h1>
+    <h1 className="text-center bg-danger text-light p-3 mb-3">
       {text} : {date}
     </h1>
   );
