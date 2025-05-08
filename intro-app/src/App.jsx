@@ -1,13 +1,19 @@
 // Importing the Header component from the "components" folder
 import Header from "./components/Header";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "./components/Form";
 // Defining the App component as a JavaScript function
 // A React component is a function that returns JSX (HTML-like syntax for React)
 const App = () => {
+  const getData = (data) => {
+    console.log("im inside of app.js", data);
+  };
+
   // The return statement specifies what the component will render on the screen
   return (
     // A div element with a class name "App" to group the content
     <div className="App">
+      <Form onGet={getData} />
       {/* Using the Header component and passing a prop called "text" with the value "Hello world" */}
       <Header text="Hello world" />
       {/* Using the Header component again with a different "text" prop value */}
