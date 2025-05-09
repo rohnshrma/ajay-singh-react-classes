@@ -20,4 +20,14 @@ body {
 .Note {
   max-width: 300px;
 }
- 
+
+.create-area {
+  width: 50%;
+  margin: 2rem auto;
+}
+.create-area input {
+  width: 75%;
+}
+.create-area button {
+  width: 25%;
+}
