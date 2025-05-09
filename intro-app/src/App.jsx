@@ -27,12 +27,12 @@ const App = () => {
   return (
     // Root div with a className of "App" for styling or identification
     <div className="App">
-      // Rendering the Header component with a prop 'text' set to "Intro App"
+      {/* Rendering the Header component with a prop 'text' set to "Intro App" */}
       <Header text="Intro App" />
-      // Displaying the current value of the 'heading' state in an h1 element
+      {/* Displaying the current value of the 'heading' state in an h1 element */}
       <h1>{heading}</h1>
-      // Rendering the Form component and passing the 'updateHeading' function
-      as a prop named 'onUpdate'
+      {/* Rendering the Form component and passing the 'updateHeading' function
+      as a prop named 'onUpdate' */}
       <Form onUpdate={updateHeading} />
     </div>
   );

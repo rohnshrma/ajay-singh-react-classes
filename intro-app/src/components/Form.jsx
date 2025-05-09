@@ -24,10 +24,10 @@ const Form = ({ onUpdate }) => {
   return (
     // Root div to contain the form
     <div>
-      // Defining a form element with a className of "form" and attaching the
-      submitHandler to the onSubmit event
+      {/* Defining a form element with a className of "form" and attaching the
+      submitHandler to the onSubmit event */}
       <form className="form" onSubmit={submitHandler}>
-        // Input field for text entry
+        {/* Input field for text entry */}
         <input
           // Attaching the changeHandler to the onChange event to update state on input
           onChange={changeHandler}
@@ -40,7 +40,7 @@ const Form = ({ onUpdate }) => {
           // Applying Bootstrap's form-control class for styling
           className="form-control"
         />
-        // Submit button to trigger form submission
+        {/* Submit button to trigger form submission */}
         <button>Submit</button>
       </form>
     </div>
