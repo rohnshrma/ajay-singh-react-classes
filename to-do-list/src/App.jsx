@@ -15,6 +15,12 @@ const App = () => {
     });
   };
 
+  const deleteTaskHandler = (deleteIndex) => {
+    setToDoList((prevTask) => {
+      return prevTask.filter((task, index) => index !== deleteIndex);
+    });
+  };
+
   return (
     <>
       <Header />
@@ -22,7 +28,12 @@ const App = () => {
       <main className="d-flex flex-wrap align-items-start justify-content-between">
         {toDoList.length > 0 ? (
           toDoList.map((note, index) => (
-            <Note key={index} id={index} title={note} />
+            <Note
+              key={index}
+              id={index}
+              title={note}
+              onDelete={deleteTaskHandler}
+            />
           ))
         ) : (
           <div className="Note m-2 p-3  rounded border shadow-sm">
