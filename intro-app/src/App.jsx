@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const App = () => {
   const [data, setData] = useState({
-    heading: "",
+    name: "",
     email: "",
   });
 
@@ -20,7 +20,7 @@ const App = () => {
   return (
     <div className="App">
       <Header text="Intro App" />
-      <h2>{data.heading}</h2>
+      <h2>{data.name}</h2>
       <p>{data.email}</p>
       <Form onUpdate={updateHeading} />
     </div>

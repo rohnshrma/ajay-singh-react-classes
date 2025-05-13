@@ -1,24 +1,38 @@
 import { useState } from "react";
 
 const Form = ({ onUpdate }) => {
-  const [full_name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
 
   const nameChangeHandler = (e) => {
-    setName(e.target.value);
+    const nameText = e.target.value;
+
+    setFormData((prevData) => {
+      return {
+        name: nameText,
+        email: prevData.email,
+      };
+    });
   };
   const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
+    const emailText = e.target.value;
+    setFormData((prevData) => {
+      return {
+        name: prevData.name,
+        email: emailText,
+      };
+    });
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setName("");
-    setEmail("");
-    onUpdate({
-      heading: full_name,
-      email: email,
+    setFormData({
+      name: "",
+      email: "",
     });
+    onUpdate(formData);
   };
 
   return (
@@ -30,7 +44,7 @@ const Form = ({ onUpdate }) => {
           name="full_name"
           placeholder="Enter your name"
           className="form-control"
-          value={full_name}
+          value={formData.name}
         />
         <input
           onChange={emailChangeHandler}
@@ -38,7 +52,7 @@ const Form = ({ onUpdate }) => {
           name="email_address"
           placeholder="Enter your email"
           className="form-control"
-          value={email}
+          value={formData.email}
         />
 
         <button>Submit</button>
