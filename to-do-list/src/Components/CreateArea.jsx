@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 
 const CreateArea = ({ onAdd }) => {
-  const [text, setText] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    status: "Pending",
+  });
   const changeHandler = (e) => {
-    setText(e.target.value);
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAdd(text);
+    onAdd(formData);
   };
   return (
     <div className="create-area p-3 rounded bg-light shadow-lg">
@@ -19,10 +29,24 @@ const CreateArea = ({ onAdd }) => {
         <input
           onChange={changeHandler}
           type="text"
-          name="task"
+          name="title"
           className="form-control"
-          placeholder="Enter Task Name..."
+          placeholder="Task Title"
         />
+        <input
+          onChange={changeHandler}
+          type="text"
+          name="description"
+          className="form-control"
+          placeholder="Task Description"
+        />
+        <select className="form-select" name="status" onChange={changeHandler}>
+          <option selected disabled>
+            Select Status
+          </option>
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
         <button className="btn btn-dark">Add Task</button>
       </form>
     </div>

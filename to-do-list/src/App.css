@@ -22,12 +22,25 @@ body {
 }
 
 .create-area {
-  width: 50%;
+  width: 70%;
   margin: 2rem auto;
 }
 .create-area input {
   width: 75%;
 }
 .create-area button {
-  width: 25%;
+  width: 20%;
+}
+
+#filter {
+  margin: 2rem auto;
+  width: 40%;
+}
+
+#filter p {
+  width: 10%;
+  margin: 0;
+}
+#filter .form-select {
+  width: 90%;
 }

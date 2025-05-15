@@ -7,11 +7,12 @@ import { useState } from "react";
 import CreateArea from "./Components/CreateArea";
 const App = () => {
   const [toDoList, setToDoList] = useState([]);
+  const [filter, setFilter] = useState("all");
 
-  const addTaskHandler = (taskName) => {
-    console.log(taskName);
+  const addTaskHandler = (taskObj) => {
+    console.log(taskObj);
     setToDoList((prevTasks) => {
-      return [taskName, ...prevTasks];
+      return [taskObj, ...prevTasks];
     });
   };
 
@@ -21,17 +22,43 @@ const App = () => {
     });
   };
 
+  const filteredTasks =
+    filter === "all"
+      ? toDoList
+      : toDoList.filter((task) => task.status === filter);
+
+  console.log(filter);
+  console.log(filteredTasks);
+
   return (
     <>
       <Header />
       <CreateArea onAdd={addTaskHandler} />
+
+      <div
+        id="filter"
+        className="d-flex align-items-center justify-content-between"
+      >
+        <p>Filter :</p>
+        <select
+          className="form-select"
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="all" selected>
+            All Tasks
+          </option>
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
       <main className="d-flex flex-wrap align-items-start justify-content-between">
-        {toDoList.length > 0 ? (
-          toDoList.map((note, index) => (
+        {filteredTasks.length > 0 ? (
+          filteredTasks.map((taskObj, index) => (
             <Note
               key={index}
               id={index}
-              title={note}
+              task={taskObj}
               onDelete={deleteTaskHandler}
             />
           ))
