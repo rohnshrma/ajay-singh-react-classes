@@ -16,13 +16,13 @@ const Note = ({ id, task, onDelete }) => {
   return (
     // A div representing a single task, styled with Bootstrap and custom classes
     <div className="Note m-2 p-3 rounded border shadow-sm">
-      // Displaying the task title in a heading
+      {/* // Displaying the task title in a heading */}
       <h3>Title : {title}</h3>
-      // Displaying the task description in a paragraph
+      {/* // Displaying the task description in a paragraph */}
       <p>Description : {description}</p>
-      // Displaying the task status with a styled badge
+      {/* // Displaying the task status with a styled badge */}
       <p>
-        Status : // Span for the status badge
+        Status :
         <span
           // Conditionally applying Bootstrap classes based on status
           // bg-danger for Pending (red), bg-success for Completed (green)
@@ -30,11 +30,11 @@ const Note = ({ id, task, onDelete }) => {
             status == "Pending" ? "bg-danger" : "bg-success"
           } `}
         >
-          // Displaying the status text
+          {/* // Displaying the status text */}
           {status}
         </span>
       </p>
-      // Delete button for the task
+      {/* // Delete button for the task */}
       <button
         // Bootstrap class for a red danger button
         className="btn btn-danger"
@@ -43,7 +43,7 @@ const Note = ({ id, task, onDelete }) => {
           onDelete(id);
         }}
       >
-        // Displaying the trash can icon
+        {/* // Displaying the trash can icon */}
         <FaTrashAlt />
       </button>
     </div>

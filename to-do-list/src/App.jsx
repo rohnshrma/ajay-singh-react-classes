@@ -68,45 +68,45 @@ const App = () => {
   return (
     // Empty tags (<>) are a React Fragment, used to group elements without adding extra HTML
     <>
-      // Rendering the Header component (displays "To Do List" title)
+      {/* // Rendering the Header component (displays "To Do List" title) */}
       <Header />
-      // Rendering the CreateArea component and passing addTaskHandler as a prop
-      // This allows CreateArea to call addTaskHandler when a new task is added
+      {/* // Rendering the CreateArea component and passing addTaskHandler as a prop */}
+      {/* // This allows CreateArea to call addTaskHandler when a new task is added */}
       <CreateArea onAdd={addTaskHandler} />
-      // A div containing the filter dropdown menu
+      {/* // A div containing the filter dropdown menu */}
       <div
         // id for potential CSS or JavaScript targeting
         id="filter"
         // Bootstrap classes for flexbox layout (aligns items horizontally and spaces them)
         className="d-flex align-items-center justify-content-between"
       >
-        // A paragraph label for the filter dropdown
+        {/* // A paragraph label for the filter dropdown */}
         <p>Filter :</p>
-        // A dropdown menu (select) to choose the filter type
+        {/* // A dropdown menu (select) to choose the filter type */}
         <select
           // Bootstrap class to style the dropdown
           className="form-select"
           // When the user selects an option, update the filter state with the selected value
           onChange={(e) => setFilter(e.target.value)}
         >
-          // Option to show all tasks (default selected)
+          {/* // Option to show all tasks (default selected) */}
           <option value="all" selected>
             All Tasks
           </option>
-          // Option to show only Pending tasks
+          {/* // Option to show only Pending tasks */}
           <option value="Pending">Pending</option>
-          // Option to show only Completed tasks
+          {/* // Option to show only Completed tasks */}
           <option value="Completed">Completed</option>
         </select>
       </div>
-      // The main section where tasks are displayed
+      {/* // The main section where tasks are displayed */}
       <main
         // Bootstrap classes for a flexible, wrapping layout
         className="d-flex flex-wrap align-items-start justify-content-between"
       >
-        // Conditionally rendering tasks or a "No Items Added" message // If
+        {/* // Conditionally rendering tasks or a "No Items Added" message // If
         filteredTasks has at least one task, map over it to render Note
-        components
+        components */}
         {filteredTasks.length > 0 ? (
           // Mapping over filteredTasks to create a Note component for each task
           filteredTasks.map((taskObj, index) => (

@@ -40,13 +40,13 @@ const CreateArea = ({ onAdd }) => {
   return (
     // A div to contain the form, styled with Bootstrap and custom classes
     <div className="create-area p-3 rounded bg-light shadow-lg">
-      // Form element with submitHandler called on submission
+      {/* // Form element with submitHandler called on submission */}
       <form
         onSubmit={submitHandler}
         // Bootstrap classes for flexbox layout (aligns inputs horizontally)
         className="d-flex align-items-center justify-content-between"
       >
-        // Input field for the task title
+        {/* // Input field for the task title */}
         <input
           // When the input changes, call changeHandler to update formData
           onChange={changeHandler}
@@ -59,7 +59,7 @@ const CreateArea = ({ onAdd }) => {
           // Placeholder text to guide the user
           placeholder="Task Title"
         />
-        // Input field for the task description
+        {/* // Input field for the task description */}
         <input
           // When the input changes, call changeHandler to update formData
           onChange={changeHandler}
@@ -72,7 +72,7 @@ const CreateArea = ({ onAdd }) => {
           // Placeholder text to guide the user
           placeholder="Task Description"
         />
-        // Dropdown menu to select task status
+        {/* // Dropdown menu to select task status */}
         <select
           // Bootstrap class for styling
           className="form-select"
@@ -81,16 +81,16 @@ const CreateArea = ({ onAdd }) => {
           // When the selection changes, call changeHandler
           onChange={changeHandler}
         >
-          // Default option (disabled so it can't be re-selected)
+          {/* // Default option (disabled so it can't be re-selected) */}
           <option selected disabled>
             Select Status
           </option>
-          // Option for Pending status
+          {/* // Option for Pending status */}
           <option value="Pending">Pending</option>
-          // Option for Completed status
+          {/* // Option for Completed status */}
           <option value="Completed">Completed</option>
         </select>
-        // Submit button to add the task
+        {/* // Submit button to add the task */}
         <button
           // Bootstrap classes for a dark-themed button
           className="btn btn-dark"
