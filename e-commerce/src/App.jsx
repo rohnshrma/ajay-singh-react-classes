@@ -11,10 +11,18 @@ import "./App.css";
 
 const App = () => {
   const [cart, setCart] = useState([]);
+  const addItemHandler = (info) => {
+    // console.log(info);
+
+    // console.log(products);
+    const test = [...products, info];
+    console.log("test", JSON.stringify(test));
+  };
 
   return (
     <div>
       <Header />
+      <AddItemForm onAdd={addItemHandler} />
       <main className="p-3">
         <div className="row g-4">
           <div className="products-list col-12 col-md-8">
