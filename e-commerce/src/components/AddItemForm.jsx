@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const AddItemForm = ({ onAdd }) => {
-  const [item, getItem] = useState({
+const AddItemForm = ({ onAdd, onHide }) => {
+  const [item, setItem] = useState({
     id: "",
     image: "",
     description: "",
@@ -14,162 +14,32 @@ const AddItemForm = ({ onAdd }) => {
     name: "",
   });
 
-  const nameHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.length + 1,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: e.target.value,
-      };
-    });
-  };
-  const priceHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: e.target.value,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const imageHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: e.target.value,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const categoryHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: e.target.value,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const descHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: e.target.value,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const brandHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: e.target.value,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const countInStockHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: e.target.value,
-        rating: prev.rating,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const ratingHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: e.target.value,
-        numReviews: prev.numReviews,
-        name: prev.name,
-      };
-    });
-  };
-  const numReviewsHandler = (e) => {
-    getItem((prev) => {
-      return {
-        id: prev.id,
-        image: prev.image,
-        description: prev.description,
-        brand: prev.brand,
-        category: prev.category,
-        price: prev.price,
-        countInStock: prev.countInStock,
-        rating: prev.rating,
-        numReviews: e.target.value,
-        name: prev.name,
-      };
-    });
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(item);
     onAdd(item);
+    onHide();
   };
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form
+        className="m-5 shadow-lg rounded border"
+        id="addProductForm"
+        onSubmit={submitHandler}
+      >
         <div className="card p-3">
+          <button
+            className="btn btn-sm btn-outline-danger cancelBtn"
+            onClick={() => onHide()}
+          >
+            X
+          </button>
           <div className="card-title text-center ">
-            {" "}
             <strong>Add Product</strong>
           </div>
           <div className="card-body">
@@ -182,7 +52,7 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Product Name"
-                    onChange={nameHandler}
+                    onChange={changeHandler}
                     name="name"
                   />
                 </div>
@@ -196,7 +66,7 @@ const AddItemForm = ({ onAdd }) => {
                     id="exampleFormControlInput1"
                     placeholder="Product Price"
                     name="price"
-                    onChange={priceHandler}
+                    onChange={changeHandler}
                   />
                 </div>
               </div>
@@ -209,7 +79,7 @@ const AddItemForm = ({ onAdd }) => {
                     id="exampleFormControlInput1"
                     placeholder="Enter image URL"
                     name="image"
-                    onChange={imageHandler}
+                    onChange={changeHandler}
                   />
                 </div>
               </div>
@@ -222,9 +92,12 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="Category"
                     name="category"
-                    onChange={categoryHandler}
+                    onChange={changeHandler}
                   >
-                    <option value="Electronis">Electronis</option>
+                    <option selected disabled>
+                      Category
+                    </option>
+                    <option value="Electronics">Electronics</option>
                     <option value="Clothes">Clothes</option>
                     <option value="Others">Others</option>
                   </select>
@@ -238,7 +111,7 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Product Ratings"
-                    onChange={ratingHandler}
+                    onChange={changeHandler}
                     name="rating"
                   />
                 </div>
@@ -251,7 +124,7 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Product Brand"
-                    onChange={brandHandler}
+                    onChange={changeHandler}
                     name="brand"
                   />
                 </div>
@@ -266,7 +139,7 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Number Reviews"
-                    onChange={numReviewsHandler}
+                    onChange={changeHandler}
                     name="numReviews"
                   />
                 </div>
@@ -279,7 +152,7 @@ const AddItemForm = ({ onAdd }) => {
                     className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Product description"
-                    onChange={descHandler}
+                    onChange={changeHandler}
                     name="description"
                   />
                 </div>

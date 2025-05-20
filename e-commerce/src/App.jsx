@@ -10,32 +10,50 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const App = () => {
+  const [isAddVisible, setIsAddVisible] = useState(false);
+  const [cart, setCart] = useState([]);
+  const showAddForm = () => setIsAddVisible(true);
+  const hideAddForm = () => setIsAddVisible(false);
+
   // const [cart, setCart] = useState([]);
   const [products, setProducts] = useState(initialProducts);
 
-  const addItemHandler = (info) => {
-    setProducts((prev) => [...prev, info]);
+  const addItemHandler = (newProduct) => {
+    setProducts((prevProducts) => {
+      return [newProduct, ...prevProducts];
+    });
   };
 
   return (
     <div>
-      <Header />
-      <AddItemForm onAdd={addItemHandler} />
-      <main className="p-3">
-        <div className="row g-4">
-          <div className="products-list col-12 col-md-8">
+      <Header onShow={showAddForm} />
+      {isAddVisible && (
+        <AddItemForm onAdd={addItemHandler} onHide={hideAddForm} />
+      )}
+      <main className="px-5">
+        <div className="row justify-content-between">
+          <div
+            className={`p-3 shadow-lg bg-light rounded border products-list ${
+              cart.length === 0 ? "col-lg-12" : "col-lg-8"
+            } justify-content-evenly"`}
+          >
             <h2 className="mb-3">Products</h2>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+            <div className="row">
               {products.map((product) => (
-                <div key={product.id} className="col">
+                <div
+                  key={product.id}
+                  className="mb-4 col-lg-4 col-md-6 d-flex justify-content-center align-items-center"
+                >
                   <Product product={product} />
                 </div>
               ))}
             </div>
           </div>
-          <div className="cart-area col-12 col-md-4">
-            <h2 className="mb-3">Cart</h2>
-          </div>
+          {cart.length > 0 && (
+            <div className="cart-area col-lg-3">
+              <h2 className="mb-3">Cart</h2>
+            </div>
+          )}
         </div>
       </main>
     </div>
