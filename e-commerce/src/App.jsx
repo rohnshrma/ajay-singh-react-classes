@@ -4,19 +4,17 @@ import AddItemForm from "./components/AddItemForm";
 import CartSummary from "./components/CartSummary";
 import CartItem from "./components/CartItem";
 import Product from "./components/Product";
-import products from "./data/products_data";
+import initialProducts from "./data/products_data";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const App = () => {
-  const [cart, setCart] = useState([]);
-  const addItemHandler = (info) => {
-    // console.log(info);
+  // const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState(initialProducts);
 
-    // console.log(products);
-    const test = [...products, info];
-    console.log("test", JSON.stringify(test));
+  const addItemHandler = (info) => {
+    setProducts((prev) => [...prev, info]);
   };
 
   return (

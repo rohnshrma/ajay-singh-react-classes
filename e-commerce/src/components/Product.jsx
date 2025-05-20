@@ -15,7 +15,7 @@ const Product = ({ product, addToCart }) => {
       <Card.Body className="d-flex flex-column">
         <Card.Title className="fs-6 text-truncate">{product.name}</Card.Title>
         <Card.Text className="text-muted mb-2">
-          ${product.price.toFixed(2)}
+          ${parseInt(product.price).toFixed(2)}
         </Card.Text>
         <Card.Text className="text-warning mb-3">
           {"★".repeat(Math.floor(product.rating))}
