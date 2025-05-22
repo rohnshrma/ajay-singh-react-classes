@@ -11,7 +11,7 @@ import "./App.css";
 
 const App = () => {
   const [isAddVisible, setIsAddVisible] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([{}]);
   const showAddForm = () => setIsAddVisible(true);
   const hideAddForm = () => setIsAddVisible(false);
 
@@ -41,8 +41,9 @@ const App = () => {
             <div className="row">
               {products.map((product) => (
                 <div
-                  key={product.id}
-                  className="mb-4 col-lg-4 col-md-6 d-flex justify-content-center align-items-center"
+                  key={product._id}
+                  className="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-3
+                  "
                 >
                   <Product product={product} />
                 </div>

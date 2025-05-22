@@ -1,41 +1,49 @@
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+const renderStars = (rating, total = 5) => {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  const empty = total - full - (half ? 1 : 0);
+  return "★".repeat(full) + (half ? "½" : "") + "☆".repeat(empty);
+};
 
-// Product component to render a single product card
 const Product = ({ product, addToCart }) => {
   return (
-    <Card className="h-100 shadow-sm" style={{ width: "16rem" }}>
-      <Card.Img
-        variant="top"
+    <div
+      className="card h-100 shadow p-3 mb-5 bg-white rounded"
+      style={{ width: "16rem" }}
+    >
+      <img
         src={product.image}
-        alt={product.name}
-        className="img-fluid"
+        alt={product.name || "Product image"}
+        className="card-img-top img-fluid"
         style={{
           height: "200px",
           objectFit: "cover",
           borderBottom: "1px solid #ccc",
         }}
       />
-      <Card.Body className="d-flex flex-column">
-        <Card.Title className="fs-6 text-truncate">{product.name}</Card.Title>
-        <Card.Text className="text-muted mb-2">
-          ${parseInt(product.price).toFixed(2)}
-        </Card.Text>
-        <Card.Text className="text-warning mb-3">
-          {"★".repeat(Math.floor(product.rating))}
-          {product.rating % 1 !== 0 && "☆"} ({product.numReviews} reviews)
-        </Card.Text>
-        <Button
-          variant="primary"
+      <div className="card-body d-flex flex-column">
+        <h5 className="card-title fs-6 text-truncate">{product.name}</h5>
+
+        {/* Price and Rating Row */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <span className="text-muted">
+            ${parseFloat(product.price).toFixed(2)}
+          </span>
+          <span className="text-warning small">
+            {renderStars(product.rating)} ({product.numReviews})
+          </span>
+        </div>
+
+        <button
+          className="btn btn-dark mt-auto"
           onClick={() => addToCart(product)}
           disabled={product.countInStock === 0}
-          className="mt-auto"
           aria-label={`Add ${product.name} to cart`}
         >
           {product.countInStock === 0 ? "Out of Stock" : "Add to Cart"}
-        </Button>
-      </Card.Body>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 };
 

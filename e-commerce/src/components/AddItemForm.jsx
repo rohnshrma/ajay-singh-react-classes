@@ -16,157 +16,136 @@ const AddItemForm = ({ onAdd, onHide }) => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setItem((prevData) => ({ ...prevData, [name]: value }));
+    setItem((prev) => ({ ...prev, [name]: value }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(item);
     onAdd(item);
     onHide();
   };
+
   return (
-    <>
-      <form
-        className="m-5 shadow-lg rounded border"
-        id="addProductForm"
-        onSubmit={submitHandler}
-      >
-        <div className="card p-3">
+    <form
+      onSubmit={submitHandler}
+      className="container my-5"
+      style={{ maxWidth: "850px" }}
+    >
+      <div className="card shadow-lg rounded-4 border-0">
+        <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
+          <h5 className="mb-0">Add New Product</h5>
           <button
-            className="btn btn-sm btn-outline-danger cancelBtn"
-            onClick={() => onHide()}
-          >
-            X
-          </button>
-          <div className="card-title text-center ">
-            <strong>Add Product</strong>
+            type="button"
+            className="btn-close btn-close-white"
+            aria-label="Close"
+            onClick={onHide}
+          ></button>
+        </div>
+        <div className="card-body">
+          <div className="row g-3">
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Product Name"
+                name="name"
+                onChange={changeHandler}
+              />
+            </div>
+            <div className="col-md-4">
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Product Price"
+                name="price"
+                onChange={changeHandler}
+              />
+            </div>
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Image URL"
+                name="image"
+                onChange={changeHandler}
+              />
+            </div>
+
+            <div className="col-md-4">
+              <select
+                className="form-select"
+                name="category"
+                defaultValue=""
+                onChange={changeHandler}
+              >
+                <option disabled value="">
+                  Select Category
+                </option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothes">Clothes</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Rating (1-5)"
+                name="rating"
+                onChange={changeHandler}
+              />
+            </div>
+
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Brand"
+                name="brand"
+                onChange={changeHandler}
+              />
+            </div>
+
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Number of Reviews"
+                name="numReviews"
+                onChange={changeHandler}
+              />
+            </div>
+
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Stock Count"
+                name="countInStock"
+                onChange={changeHandler}
+              />
+            </div>
+
+            <div className="col-md-12">
+              <textarea
+                rows="3"
+                className="form-control"
+                placeholder="Product Description"
+                name="description"
+                onChange={changeHandler}
+              ></textarea>
+            </div>
           </div>
-          <div className="card-body">
-            <div className="row mt-2">
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Product Name"
-                    onChange={changeHandler}
-                    name="name"
-                  />
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Product Price"
-                    name="price"
-                    onChange={changeHandler}
-                  />
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Enter image URL"
-                    name="image"
-                    onChange={changeHandler}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlSelect1">Example select</label> */}
-                  <select
-                    className="form-control"
-                    id="Category"
-                    name="category"
-                    onChange={changeHandler}
-                  >
-                    <option selected disabled>
-                      Category
-                    </option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Clothes">Clothes</option>
-                    <option value="Others">Others</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Product Ratings"
-                    onChange={changeHandler}
-                    name="rating"
-                  />
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Product Brand"
-                    onChange={changeHandler}
-                    name="brand"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-4">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Number Reviews"
-                    onChange={changeHandler}
-                    name="numReviews"
-                  />
-                </div>
-              </div>
-              <div className="col-8">
-                <div className="form-group">
-                  {/* <label for="exampleFormControlInput1">Email address</label> */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Product description"
-                    onChange={changeHandler}
-                    name="description"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row m-3">
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
-            </div>
+
+          <div className="d-flex justify-content-end mt-4">
+            <button type="submit" className="btn btn-dark px-4">
+              Submit
+            </button>
           </div>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 };
 
