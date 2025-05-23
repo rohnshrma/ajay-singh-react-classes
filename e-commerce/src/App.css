@@ -2,10 +2,6 @@ body {
   background-color: #e7e7e7;
 }
 
-.product {
-  width: 30%;
-}
-
 #addProductForm button.cancelBtn {
   position: absolute;
   top: 10px;

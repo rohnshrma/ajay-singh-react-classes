@@ -9,7 +9,7 @@ const Product = ({ product, addToCart }) => {
   return (
     <div
       className="card h-100 shadow p-3 mb-5 bg-white rounded"
-      style={{ width: "16rem" }}
+      style={{ width: "20rem" }}
     >
       <img
         src={product.image}
