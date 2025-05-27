@@ -12,7 +12,7 @@ import "./App.css";
 const App = () => {
   const [isAddVisible, setIsAddVisible] = useState(false);
   const [cart, setCart] = useState({
-    cartItems: [{}],
+    cartItems: [],
     total: 0,
   });
   const showAddForm = () => setIsAddVisible(true);
@@ -26,6 +26,18 @@ const App = () => {
       return [newProduct, ...prevProducts];
     });
   };
+
+  const addToCartHandler = (cartProduct) => {
+    setCart((prevCart) => {
+      return {
+        cartItems: [cartProduct, ...prevCart.cartItems],
+        total: prevCart.total + cartProduct.price,
+      };
+    });
+  };
+
+  console.log("cart Item:", cart.cartItems);
+  console.log("cart Total:", cart.total);
 
   return (
     <div>
@@ -49,7 +61,7 @@ const App = () => {
                     cart.cartItems.length > 0 ? "col-lg-4" : "col-lg-3"
                   } d-flex justify-content-center mb-3`}
                 >
-                  <Product product={product} />
+                  <Product product={product} addToCart={addToCartHandler} />
                 </div>
               ))}
             </div>
