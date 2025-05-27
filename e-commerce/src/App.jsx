@@ -27,11 +27,42 @@ const App = () => {
     });
   };
 
-  const addToCartHandler = (cartProduct) => {
+  // Define the addToCartHandler function, which takes a newProduct object as an argument
+  const addToCartHandler = (newProduct) => {
+    // Update the cart state using setCart, passing a function that receives the previous cart state (prevCart)
     setCart((prevCart) => {
+      // Find if the product already exists in the cart by checking if any item's _id matches newProduct._id
+      const existingItem = prevCart.cartItems.find(
+        (item) => item._id === newProduct._id
+      );
+
+      // Declare variables to hold the updated cart items and total (to be assigned later)
+      let updatedItems;
+      let updatedTotal;
+
+      // Check if the product already exists in the cart
+      if (existingItem) {
+        // If it exists, map over cartItems to create a new array
+        updatedItems = prevCart.cartItems.map((item) => {
+          // For the matching item (by _id), spread its properties and increment its quantity
+          return item._id === newProduct._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : // For non-matching items, return them unchanged
+              item;
+        });
+        // Update the total by adding the new product's price to the previous total
+        updatedTotal = prevCart.total + newProduct.price;
+      } else {
+        // If the product doesn't exist, create a new array with the new product (with quantity 1) prepended to existing cart items
+        updatedItems = [{ ...newProduct, quantity: 1 }, ...prevCart.cartItems];
+        // Update the total by adding the new product's price to the previous total
+        updatedTotal = prevCart.total + newProduct.price;
+      }
+
+      // Return the updated cart state with the new cartItems array and updated total
       return {
-        cartItems: [cartProduct, ...prevCart.cartItems],
-        total: prevCart.total + cartProduct.price,
+        cartItems: updatedItems,
+        total: updatedTotal,
       };
     });
   };
