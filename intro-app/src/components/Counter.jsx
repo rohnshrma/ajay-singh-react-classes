@@ -3,16 +3,16 @@ import { useState } from "react";
 const Counter = () => {
   console.log("Counter rerendered");
   var [count, setCount] = useState(0);
+  console.log(count, setCount);
 
   const inrementHandler = () => {
     setCount(count + 1);
-    console.log(count);
   };
   const decrementHandler = () => {
     setCount(count - 1);
-    console.log(count);
   };
 
+  console.log(count);
   return (
     <div className="Counter p-4 shadow-sm m-4 text-center">
       <h2>Count : {count}</h2>
