@@ -1,7 +1,7 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
 
-const CartItem = ({ details, onDelete }) => {
+const CartItem = ({ details, onDelete, onUpdate }) => {
   const { id, image, name, category, description, quantity, price } = details;
   return (
     <div className="py-3 px-1 border rounded shadow-sm cart-item d-flex align-items-center justify-content-between">
@@ -27,9 +27,19 @@ const CartItem = ({ details, onDelete }) => {
         </h6>
         <p>{category}</p>
         <div className="d-flex justify-content-between align-items-center">
-          <button className="btn btn-sm btn-success">-</button>
+          <button
+            onClick={() => onUpdate({ id, updateQty: -1 })}
+            className="btn btn-sm btn-success"
+          >
+            -
+          </button>
           {quantity}
-          <button className="btn btn-sm btn-success">+</button>
+          <button
+            onClick={() => onUpdate({ id, updateQty: 1 })}
+            className="btn btn-sm btn-success"
+          >
+            +
+          </button>
         </div>
       </div>
       <button

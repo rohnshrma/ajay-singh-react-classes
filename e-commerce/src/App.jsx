@@ -83,6 +83,48 @@ const App = () => {
     });
   };
 
+  const updateTaskHandler = ({ id, updateQty }) => {
+    console.log(id, updateQty);
+
+    setCart((prevCart) => {
+      const exisitingItem = prevCart.cartItems.find((item) => item.id === id);
+
+      let updatedItems;
+      let updatedTotal;
+
+      if (exisitingItem) {
+        const newQty = exisitingItem.quantity + updateQty;
+        if (newQty <= 0) {
+          updatedItems = prevCart.cartItems.filter((item) => item.id !== id);
+          updatedTotal = updatedItems.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          );
+          console.log(updatedTotal);
+          return {
+            cartItems: updatedItems,
+            total: updatedTotal,
+          };
+        } else {
+          updatedItems = prevCart.cartItems.map((item) =>
+            item.id === id ? { ...item, quantity: newQty } : item
+          );
+          updatedTotal = updatedItems.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          );
+          console.log(updatedTotal);
+
+          return {
+            cartItems: updatedItems,
+            total: updatedTotal,
+          };
+        }
+      }
+      return prevCart;
+    });
+  };
+
   console.log("cart Item:", cart.cartItems);
   console.log("cart Total:", cart.total);
 
@@ -115,7 +157,11 @@ const App = () => {
           </div>
           {cart.cartItems.length > 0 && (
             <div className="cart-area col-lg-4 bg-light rounded p-3 shadow-lg">
-              <CartSummary cart={cart} onDelete={removeFromCartHandler} />
+              <CartSummary
+                cart={cart}
+                onDelete={removeFromCartHandler}
+                onUpdate={updateTaskHandler}
+              />
             </div>
           )}
         </div>

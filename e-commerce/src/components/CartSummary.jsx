@@ -1,7 +1,7 @@
 import React from "react";
 import CartItem from "./CartItem";
 
-const CartSummary = ({ cart, onDelete }) => {
+const CartSummary = ({ cart, onDelete, onUpdate }) => {
   const { cartItems, total } = cart;
   return (
     <>
@@ -9,7 +9,12 @@ const CartSummary = ({ cart, onDelete }) => {
 
       <div className="cart-items mb-4">
         {cartItems.map((cartItem) => (
-          <CartItem details={cartItem} key={cartItem.id} onDelete={onDelete} />
+          <CartItem
+            details={cartItem}
+            key={cartItem.id}
+            onDelete={onDelete}
+            onUpdate={onUpdate}
+          />
         ))}
       </div>
 
