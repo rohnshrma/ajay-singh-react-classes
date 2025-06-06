@@ -27,7 +27,7 @@ const Note = ({ id, task, onDelete }) => {
           // Conditionally applying Bootstrap classes based on status
           // bg-danger for Pending (red), bg-success for Completed (green)
           className={`mx-2 badge ${
-            status == "Pending" ? "bg-danger" : "bg-success"
+            status == "pending" ? "bg-danger" : "bg-success"
           } `}
         >
           {/* // Displaying the status text */}

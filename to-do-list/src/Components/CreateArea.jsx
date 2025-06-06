@@ -7,16 +7,19 @@ const initialState = {
 };
 
 const reducerFn = (state, action) => {
-  switch (action.type) {
-    case "title_change":
-    case "description_change":
-    case "status_change":
-      return {
-        ...state,
-        [action.input_name]: action.payload,
-      };
-    default:
-      return state;
+  if (action.type === "update") {
+    return {
+      ...state,
+      [action.input_name]: action.payload,
+    };
+  } else if (action.type === "reset") {
+    return {
+      title: "",
+      description: "",
+      status: "pending",
+    };
+  } else {
+    return state;
   }
 };
 
@@ -25,12 +28,12 @@ const CreateArea = ({ onAdd }) => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    dispatch({ type: `${name}_change`, payload: value, input_name: name });
+    dispatch({ type: "update", payload: value, input_name: name });
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    dispatch({ type: "reset" });
     onAdd(formData);
   };
 
@@ -46,6 +49,7 @@ const CreateArea = ({ onAdd }) => {
           name="title"
           className="form-control"
           placeholder="Task Title"
+          value={formData.title}
         />
         <input
           onChange={changeHandler}
@@ -53,8 +57,14 @@ const CreateArea = ({ onAdd }) => {
           name="description"
           className="form-control"
           placeholder="Task Description"
+          value={formData.description}
         />
-        <select className="form-select" name="status" onChange={changeHandler}>
+        <select
+          value={formData.status}
+          className="form-select"
+          name="status"
+          onChange={changeHandler}
+        >
           <option selected disabled>
             Select Status
           </option>
