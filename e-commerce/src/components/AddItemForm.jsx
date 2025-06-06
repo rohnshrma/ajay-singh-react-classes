@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
+
+const initialState = {
+  id: "",
+  image: "",
+  description: "",
+  brand: "",
+  category: "",
+  price: "",
+  countInStock: "",
+  rating: "",
+  numReviews: "",
+  name: "",
+};
+
+const reducerFn = (state, action) => {
+  return { ...state, [action.type]: action.payload };
+};
 
 const AddItemForm = ({ onAdd, onHide }) => {
-  const [item, setItem] = useState({
-    id: "",
-    image: "",
-    description: "",
-    brand: "",
-    category: "",
-    price: "",
-    countInStock: "",
-    rating: "",
-    numReviews: "",
-    name: "",
-  });
+  const [newProduct, dispatch] = useReducer(reducerFn, initialState);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setItem((prev) => ({ ...prev, [name]: value }));
+    dispatch({ type: name, payload: value });
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAdd(item);
+    onAdd(newProduct);
     onHide();
   };
 
