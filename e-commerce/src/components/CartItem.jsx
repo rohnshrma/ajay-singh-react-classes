@@ -19,13 +19,17 @@ const CartItem = ({ details, onDelete, onUpdate }) => {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            maxWidth: "80%", // Adjust this value if needed (e.g., "200px")
+            maxWidth: "80%",
+            marginBottom: "16px", // Adjust this value if needed (e.g., "200px")
           }}
           title={name} // Show full name on hover
         >
           {name}
         </h6>
-        <p>{category}</p>
+        <div className="details  d-flex align-items-center justify-content-between">
+          <p>{category}</p>
+          <p>{price}</p>
+        </div>
         <div className="d-flex justify-content-between align-items-center">
           <button
             onClick={() => onUpdate({ id, updateQty: -1 })}
