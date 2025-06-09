@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
+import {FaTimes} from "react-icons/fa"
 
-const AddItemForm = ({ onAdd, onHide }) => {
-  const [item, setItem] = useState({
+const initialState = {
     id: "",
     image: "",
     description: "",
@@ -12,17 +12,34 @@ const AddItemForm = ({ onAdd, onHide }) => {
     rating: "",
     numReviews: "",
     name: "",
-  });
+  }
+
+  const reducerFn = (state,action)=>{
+    if(action.type==="update"){
+      return { ...state, [action.name]: action.value }
+    }
+    if (action.type === "reset"){
+      return initialState
+    }
+    return state
+  }
+
+
+
+const AddItemForm = ({ onAdd, onHide }) => {
+  const [item, dispatch] = useReducer(reducerFn,initialState);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setItem((prev) => ({ ...prev, [name]: value }));
+    dispatch({type : "update" , name , value})
+
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     onAdd(item);
-    onHide();
+    dispatch({type:"reset"})
+    // onHide();
   };
 
   return (
@@ -39,7 +56,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
             className="btn-close btn-close-white"
             aria-label="Close"
             onClick={onHide}
-          ></button>
+          ><FaTimes/></button>
         </div>
         <div className="card-body">
           <div className="row g-3">
@@ -49,6 +66,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Name"
                 name="name"
+                value={item.name}
                 onChange={changeHandler}
               />
             </div>
@@ -58,6 +76,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Price"
                 name="price"
+                value={item.price}
                 onChange={changeHandler}
               />
             </div>
@@ -66,6 +85,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 type="text"
                 className="form-control"
                 placeholder="Image URL"
+                value={item.image}
                 name="image"
                 onChange={changeHandler}
               />
@@ -73,9 +93,10 @@ const AddItemForm = ({ onAdd, onHide }) => {
 
             <div className="col-md-4">
               <select
-                className="form-select"
+                className="custom-select"
                 name="category"
                 defaultValue=""
+                value={item.category}
                 onChange={changeHandler}
               >
                 <option disabled value="">
@@ -92,6 +113,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 type="text"
                 className="form-control"
                 placeholder="Rating (1-5)"
+                value={item.rating}
                 name="rating"
                 onChange={changeHandler}
               />
@@ -103,6 +125,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Brand"
                 name="brand"
+                value={item.brand}
                 onChange={changeHandler}
               />
             </div>
@@ -112,6 +135,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 type="text"
                 className="form-control"
                 placeholder="Number of Reviews"
+                value={item.numReviews}
                 name="numReviews"
                 onChange={changeHandler}
               />
@@ -123,6 +147,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Stock Count"
                 name="countInStock"
+                value={item.countInStock}
                 onChange={changeHandler}
               />
             </div>
@@ -133,6 +158,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Description"
                 name="description"
+                value={item.description}
                 onChange={changeHandler}
               ></textarea>
             </div>

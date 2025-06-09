@@ -2,7 +2,7 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 
 const CartItem = ({ details, onDelete, onUpdate }) => {
-  const { id, image, name, category, description, quantity, price } = details;
+  const { id, image, name, category, quantity, price } = details;
   return (
     <div className="py-3 px-1 border rounded shadow-sm cart-item d-flex align-items-center justify-content-between">
       <div className="col-4">

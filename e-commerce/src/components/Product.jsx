@@ -21,7 +21,7 @@ const Product = ({ product, addToCart }) => {
           borderBottom: "1px solid #ccc",
         }}
       />
-      <div className="card-body d-flex flex-column">
+      <div className="card-body d-flex flex-column justify-content-between">
         <h5 className="card-title fs-6 text-truncate">{product.name}</h5>
 
         {/* Price and Rating Row */}
@@ -34,8 +34,16 @@ const Product = ({ product, addToCart }) => {
           </span>
         </div>
 
+<p  style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: "100%",
+            marginBottom: "16px", // Adjust this value if needed (e.g., "200px")
+          }}>{product.description}</p>
+
         <button
-          className="btn btn-dark mt-auto"
+          className="btn btn-dark"
           onClick={() => addToCart(product)}
           disabled={product.countInStock === 0}
           aria-label={`Add ${product.name} to cart`}

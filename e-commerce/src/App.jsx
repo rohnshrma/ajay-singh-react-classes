@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer,useState } from "react";
 import Header from "./components/Header";
 import AddItemForm from "./components/AddItemForm";
 import CartSummary from "./components/CartSummary";
@@ -9,16 +9,109 @@ import initialProducts from "./data/products_data";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+const initialState = {
+  cartItems: [],
+  total: 0,
+};
+
+const cartReducer = (state, action) => {
+  if (action.type === "ADD") {
+    const { newProduct } = action;
+    const existingItem = state.cartItems.find(
+      (item) => item.id === newProduct.id
+    );
+
+    let updatedItems;
+    let updatedTotal;
+
+    if (existingItem) {
+      updatedItems = state.cartItems.map((item) => {
+        return item.id === newProduct.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item;
+      });
+
+      updatedTotal = state.total + newProduct.price;
+    } else {
+      updatedItems = [{ ...newProduct, quantity: 1 }, ...state.cartItems];
+
+      updatedTotal = state.total + newProduct.price;
+    }
+
+    return {
+      cartItems: updatedItems,
+      total: updatedTotal,
+    };
+  }
+  if (action.type === "DELETE") {
+    const { deleteId } = action;
+    let existingItem;
+    let updatedItems;
+    let updatedTotal;
+
+    existingItem = state.cartItems.find((item) => item.id === deleteId);
+    if (existingItem) {
+      updatedItems = state.cartItems.filter((item) => item.id !== deleteId);
+      updatedTotal = updatedItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+      return {
+        cartItems: updatedItems,
+        total: updatedTotal,
+      };
+    }
+  }
+
+  if (action.type === "UPDATE") {
+    const { id, updateQty } = action;
+
+    const exisitingItem = state.cartItems.find((item) => item.id === id);
+
+    let updatedItems;
+    let updatedTotal;
+
+    if (exisitingItem) {
+      const newQty = exisitingItem.quantity + updateQty;
+      if (newQty <= 0) {
+        updatedItems = state.cartItems.filter((item) => item.id !== id);
+        updatedTotal = updatedItems.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        console.log(updatedTotal);
+        return {
+          cartItems: updatedItems,
+          total: updatedTotal,
+        };
+      } else {
+        updatedItems = state.cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: newQty } : item
+        );
+        updatedTotal = updatedItems.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        console.log(updatedTotal);
+
+        return {
+          cartItems: updatedItems,
+          total: updatedTotal,
+        };
+      }
+    }
+    return state;
+  }
+
+  return state;
+};
+
 const App = () => {
   const [isAddVisible, setIsAddVisible] = useState(false);
-  const [cart, setCart] = useState({
-    cartItems: [],
-    total: 0,
-  });
+  const [cart, dispatch] = useReducer(cartReducer, initialState);
   const showAddForm = () => setIsAddVisible(true);
   const hideAddForm = () => setIsAddVisible(false);
 
-  // const [cart, setCart] = useState([]);
   const [products, setProducts] = useState(initialProducts);
 
   const addItemHandler = (newProduct) => {
@@ -27,103 +120,14 @@ const App = () => {
     });
   };
 
-  const addToCartHandler = (newProduct) => {
-    console.log("new product =>", newProduct);
+  const addToCartHandler = (newProduct) =>
+    dispatch({ type: "ADD", newProduct });
 
-    setCart((prevCart) => {
-      const existingItem = prevCart.cartItems.find(
-        (item) => item.id === newProduct.id
-      );
+  const removeFromCartHandler = (deleteId) =>
+    dispatch({ type: "DELETE", deleteId });
 
-      let updatedItems;
-      let updatedTotal;
-
-      if (existingItem) {
-        updatedItems = prevCart.cartItems.map((item) => {
-          return item.id === newProduct.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item;
-        });
-
-        updatedTotal = prevCart.total + newProduct.price;
-      } else {
-        updatedItems = [{ ...newProduct, quantity: 1 }, ...prevCart.cartItems];
-
-        updatedTotal = prevCart.total + newProduct.price;
-      }
-
-      return {
-        cartItems: updatedItems,
-        total: updatedTotal,
-      };
-    });
-  };
-
-  const removeFromCartHandler = (deleteId) => {
-    setCart((prevCart) => {
-      let existingItem;
-
-      let updatedItems;
-      let updatedTotal;
-
-      existingItem = prevCart.cartItems.find((item) => item.id === deleteId);
-      if (existingItem) {
-        updatedItems = prevCart.cartItems.filter(
-          (item) => item.id !== deleteId
-        );
-        updatedTotal = updatedItems.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        );
-        return {
-          cartItems: updatedItems,
-          total: updatedTotal,
-        };
-      }
-    });
-  };
-
-  const updateTaskHandler = ({ id, updateQty }) => {
-    console.log(id, updateQty);
-
-    setCart((prevCart) => {
-      const exisitingItem = prevCart.cartItems.find((item) => item.id === id);
-
-      let updatedItems;
-      let updatedTotal;
-
-      if (exisitingItem) {
-        const newQty = exisitingItem.quantity + updateQty;
-        if (newQty <= 0) {
-          updatedItems = prevCart.cartItems.filter((item) => item.id !== id);
-          updatedTotal = updatedItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-          );
-          console.log(updatedTotal);
-          return {
-            cartItems: updatedItems,
-            total: updatedTotal,
-          };
-        } else {
-          updatedItems = prevCart.cartItems.map((item) =>
-            item.id === id ? { ...item, quantity: newQty } : item
-          );
-          updatedTotal = updatedItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-          );
-          console.log(updatedTotal);
-
-          return {
-            cartItems: updatedItems,
-            total: updatedTotal,
-          };
-        }
-      }
-      return prevCart;
-    });
-  };
+  const updateTaskHandler = ({ id, updateQty }) =>
+    dispatch({ type: "UPDATE", id, updateQty });
 
   console.log("cart Item:", cart.cartItems);
   console.log("cart Total:", cart.total);
