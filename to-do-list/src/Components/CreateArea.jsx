@@ -1,4 +1,5 @@
-import React, { useReducer } from "react";
+import React, { useReducer , useContext} from "react";
+import { TaskContext } from "../Context/TaskContext";
 
 const initialState = {
   title: "",
@@ -23,7 +24,8 @@ const reducerFn = (state, action) => {
   }
 };
 
-const CreateArea = ({ onAdd }) => {
+const CreateArea = () => {
+  const {addTaskHandler} = useContext(TaskContext)
   const [formData, dispatch] = useReducer(reducerFn, initialState);
 
   const changeHandler = (e) => {
@@ -34,7 +36,7 @@ const CreateArea = ({ onAdd }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch({ type: "reset" });
-    onAdd(formData);
+    addTaskHandler(formData);
   };
 
   return (
