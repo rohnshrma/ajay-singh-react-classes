@@ -29,8 +29,9 @@ const AddItemForm = ({ onAdd, onHide }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // onAdd(newProduct);
+
     setProduct(newProduct);
+    onAdd();
     onHide();
   };
 
