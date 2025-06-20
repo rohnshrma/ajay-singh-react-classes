@@ -1,4 +1,5 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
+import NewProductContext from "../Context/NewProductContext";
 
 const initialState = {
   id: "",
@@ -19,6 +20,7 @@ const reducerFn = (state, action) => {
 
 const AddItemForm = ({ onAdd, onHide }) => {
   const [newProduct, dispatch] = useReducer(reducerFn, initialState);
+  const { setProduct } = useContext(NewProductContext);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -27,7 +29,8 @@ const AddItemForm = ({ onAdd, onHide }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAdd(newProduct);
+    // onAdd(newProduct);
+    setProduct(newProduct);
     onHide();
   };
 

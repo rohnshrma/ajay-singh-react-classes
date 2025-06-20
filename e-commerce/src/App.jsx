@@ -1,12 +1,12 @@
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import AddItemForm from "./components/AddItemForm";
 import CartSummary from "./components/CartSummary";
 import Product from "./components/Product";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import NewProductContext from "./Context/NewProductContext";
 
 const initialState = {
   cartItems: [],
@@ -24,8 +24,10 @@ const App = () => {
 
   const showAddForm = () => setIsAddVisible(true);
   const hideAddForm = () => setIsAddVisible(false);
+  const { product } = useContext(NewProductContext);
+  console.log(product);
 
-  // ✅ Fetch products from Firebase Realtime Database
+  // Fetch products from Firebase Realtime Database
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -47,13 +49,14 @@ const App = () => {
     fetchProducts();
   }, []);
 
-  const addItemHandler = async (newProduct) => {
+  // Removed the props and trying to using the context value
+  const addItemHandler = async () => {
     try {
       await axios.post(
         "https://products-1c38d-default-rtdb.firebaseio.com/products.json",
-        newProduct
+        product
       );
-      setProducts((prevProducts) => [newProduct, ...prevProducts]);
+      setProducts((prevProducts) => [product, ...prevProducts]);
     } catch (error) {
       console.error("Failed to add product:", error);
     }
