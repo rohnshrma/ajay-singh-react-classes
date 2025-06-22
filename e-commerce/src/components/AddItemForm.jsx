@@ -1,38 +1,21 @@
-import React, { useContext, useReducer, useState } from "react";
-import NewProductContext from "../Context/NewProductContext";
-
-const initialState = {
-  id: "",
-  image: "",
-  description: "",
-  brand: "",
-  category: "",
-  price: "",
-  countInStock: "",
-  rating: "",
-  numReviews: "",
-  name: "",
-};
-
-const reducerFn = (state, action) => {
-  return { ...state, [action.type]: action.payload };
-};
+import React, { useContext } from "react";
+import AppContext from "../context/AppContext";
 
 const AddItemForm = ({ onAdd, onHide }) => {
-  const [newProduct, dispatch] = useReducer(reducerFn, initialState);
-  const { setProduct } = useContext(NewProductContext);
+  const { product, setProduct } = useContext(AppContext);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    dispatch({ type: name, payload: value });
+    setProduct((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    setProduct(newProduct);
-    onAdd();
-    onHide();
+    onAdd(); // This uses the current `product` from context
+    onHide(); // Closes the form modal
   };
 
   return (
@@ -59,6 +42,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Name"
                 name="name"
+                value={product.name}
                 onChange={changeHandler}
               />
             </div>
@@ -68,6 +52,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Price"
                 name="price"
+                value={product.price}
                 onChange={changeHandler}
               />
             </div>
@@ -77,6 +62,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Image URL"
                 name="image"
+                value={product.image}
                 onChange={changeHandler}
               />
             </div>
@@ -85,12 +71,10 @@ const AddItemForm = ({ onAdd, onHide }) => {
               <select
                 className="form-select"
                 name="category"
-                defaultValue=""
+                value={product.category}
                 onChange={changeHandler}
               >
-                <option disabled value="">
-                  Select Category
-                </option>
+                <option value="">Select Category</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Clothes">Clothes</option>
                 <option value="Others">Others</option>
@@ -103,6 +87,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Rating (1-5)"
                 name="rating"
+                value={product.rating}
                 onChange={changeHandler}
               />
             </div>
@@ -113,6 +98,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Brand"
                 name="brand"
+                value={product.brand}
                 onChange={changeHandler}
               />
             </div>
@@ -123,6 +109,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Number of Reviews"
                 name="numReviews"
+                value={product.numReviews}
                 onChange={changeHandler}
               />
             </div>
@@ -133,6 +120,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Stock Count"
                 name="countInStock"
+                value={product.countInStock}
                 onChange={changeHandler}
               />
             </div>
@@ -143,6 +131,7 @@ const AddItemForm = ({ onAdd, onHide }) => {
                 className="form-control"
                 placeholder="Product Description"
                 name="description"
+                value={product.description}
                 onChange={changeHandler}
               ></textarea>
             </div>

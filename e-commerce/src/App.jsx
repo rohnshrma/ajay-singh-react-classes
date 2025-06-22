@@ -1,82 +1,31 @@
-import { useReducer, useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import AppContext from "./Context/AppContext";
+
 import Header from "./components/Header";
 import AddItemForm from "./components/AddItemForm";
 import CartSummary from "./components/CartSummary";
 import Product from "./components/Product";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import NewProductContext from "./Context/NewProductContext";
-
-const initialState = {
-  cartItems: [],
-  total: 0,
-};
-
-const cartReducer = (state, action) => {
-  // existing reducer code unchanged
-};
 
 const App = () => {
-  const [isAddVisible, setIsAddVisible] = useState(false);
-  const [cart, dispatch] = useReducer(cartReducer, initialState);
-  const [products, setProducts] = useState([]);
-
-  const showAddForm = () => setIsAddVisible(true);
-  const hideAddForm = () => setIsAddVisible(false);
-  const { product } = useContext(NewProductContext);
-  console.log(product);
-
-  // Fetch products from Firebase Realtime Database
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://products-1c38d-default-rtdb.firebaseio.com/products.json"
-        );
-        // Convert object to array
-        const data = response.data;
-        const loadedProducts = Object.keys(data).map((key) => ({
-          ...data[key],
-          id: key,
-        }));
-        setProducts(loadedProducts);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  // Removed the props and trying to using the context value
-  const addItemHandler = async () => {
-    try {
-      await axios.post(
-        "https://products-1c38d-default-rtdb.firebaseio.com/products.json",
-        product
-      );
-      setProducts((prevProducts) => [product, ...prevProducts]);
-    } catch (error) {
-      console.error("Failed to add product:", error);
-    }
-  };
-
-  const addToCartHandler = (newProduct) =>
-    dispatch({ type: "ADD", newProduct });
-
-  const removeFromCartHandler = (deleteId) =>
-    dispatch({ type: "DELETE", deleteId });
-
-  const updateTaskHandler = ({ id, updateQty }) =>
-    dispatch({ type: "UPDATE", id, updateQty });
+  const {
+    products,
+    cart,
+    isAddVisible,
+    showAddForm,
+    hideAddForm,
+    addItemHandler,
+    addToCartHandler,
+    removeFromCartHandler,
+    updateTaskHandler,
+  } = useContext(AppContext);
 
   return (
     <div>
-      <Header onShow={showAddForm} />
-      {isAddVisible && (
-        <AddItemForm onAdd={addItemHandler} onHide={hideAddForm} />
-      )}
+      <Header /> {/* uses showAddForm internally */}
+      {isAddVisible && <AddItemForm />}
       <main className="px-5">
         <div className="row justify-content-between">
           <div
@@ -93,18 +42,14 @@ const App = () => {
                     cart.cartItems.length > 0 ? "col-lg-4" : "col-lg-3"
                   } d-flex justify-content-center mb-3`}
                 >
-                  <Product product={product} addToCart={addToCartHandler} />
+                  <Product product={product} />
                 </div>
               ))}
             </div>
           </div>
           {cart.cartItems.length > 0 && (
             <div className="cart-area col-lg-4 bg-light rounded p-3 shadow-lg">
-              <CartSummary
-                cart={cart}
-                onDelete={removeFromCartHandler}
-                onUpdate={updateTaskHandler}
-              />
+              <CartSummary />
             </div>
           )}
         </div>

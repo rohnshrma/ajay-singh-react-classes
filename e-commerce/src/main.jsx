@@ -1,10 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { NewProductContextProvider } from "./Context/NewProductContext";
+import ReactDOM from "react-dom/client";
 import App from "./App";
+import { AppProvider } from "./context/AppContext";
 
-createRoot(document.getElementById("root")).render(
-  <NewProductContextProvider>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <AppProvider>
     <App />
-  </NewProductContextProvider>
+  </AppProvider>
 );
