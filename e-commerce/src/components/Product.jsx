@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import AppContext from "../Context/AppContext";
+
 const renderStars = (rating, total = 5) => {
   const full = Math.floor(rating);
   const half = rating % 1 >= 0.5;
@@ -5,7 +8,9 @@ const renderStars = (rating, total = 5) => {
   return "★".repeat(full) + (half ? "½" : "") + "☆".repeat(empty);
 };
 
-const Product = ({ product, addToCart }) => {
+const Product = ({ product }) => {
+  const { addToCartHandler } = useContext(AppContext);
+
   return (
     <div
       className="card h-100 shadow p-3 mb-5 bg-white rounded"
@@ -36,7 +41,7 @@ const Product = ({ product, addToCart }) => {
 
         <button
           className="btn btn-dark mt-auto"
-          onClick={() => addToCart(product)}
+          onClick={() => addToCartHandler(product)}
           disabled={product.countInStock === 0}
           aria-label={`Add ${product.name} to cart`}
         >
