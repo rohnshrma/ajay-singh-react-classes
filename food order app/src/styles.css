@@ -1,0 +1,43 @@
+body {
+  background-color: #f5f5f5;
+}
+.row {
+  margin: 0;
+}
+.header {
+  color: #fff;
+  padding: 1rem;
+  background-color: rgb(179, 73, 73);
+}
+
+.logo-box {
+  font-size: 2rem;
+}
+.cart-info-box {
+  font-size: 1.5rem;
+}
+
+.dish-image {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.cart-content {
+  background-color: #fff !important;
+}
+.cart-item {
+  border-radius: 4px;
+}
+.cart-item p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column-reverse;
+  }
+  .cart {
+    margin-bottom: 1.5rem;
+  }
+}
