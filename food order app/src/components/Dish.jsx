@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import { NavLink, useNavigate } from "react-router-dom";
 const Dish = ({
   name,
   id,
@@ -9,10 +11,12 @@ const Dish = ({
   description,
   vegNonVeg,
   image,
-  dispatch,
 }) => {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(CartContext);
+
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-md-4 mb-4" onClick={() => navigate(`/product/${id}`)}>
       <div className="card shadow-lg border-0 rounded-4">
         <img
           src={image}

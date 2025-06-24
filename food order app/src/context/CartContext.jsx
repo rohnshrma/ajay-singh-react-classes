@@ -71,23 +71,30 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState);
   const [menu, setMenu] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchMenu = async () => {
-      const response = await fetch(
-        "https://webigeeks-56786-default-rtdb.firebaseio.com/menu.json"
-      );
-      const data = await response.json();
-      console.log(data);
-      setMenu(data);
-
-      console.log("menu =>", menu);
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          "https://webigeeks-56786-default-rtdb.firebaseio.com/menu.json"
+        );
+        const data = await response.json();
+        console.log(data);
+        setMenu(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchMenu();
   }, []);
+  console.log("menu =>", menu);
 
   return (
-    <CartContext.Provider value={{ cartState, dispatch, menu }}>
+    <CartContext.Provider value={{ cartState, dispatch, menu, isLoading }}>
       {children}
     </CartContext.Provider>
   );

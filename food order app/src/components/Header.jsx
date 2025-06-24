@@ -7,9 +7,9 @@ import { FaCartShopping } from "react-icons/fa6";
 const Header = () => {
   const { cartState } = useContext(CartContext);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-danger">
+    <nav className="navbar navbar-expand-lg bg-danger text-white d-flex align-items-center">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
+        <NavLink className="navbar-brand text-white fw-bold" to="/">
           Tummy Food App
         </NavLink>
         <button
@@ -24,21 +24,32 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li className="nav-link">
-              <NavLink className="nav-link" to="/">
+        <div
+          className="collapse navbar-collapse d-flex align-items-center"
+          id="navbarNav"
+        >
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/">
                 Home
               </NavLink>
             </li>
-            <li className="nav-link">
-              <NavLink className="nav-link" to="/menu">
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/menu">
                 Menu
               </NavLink>
             </li>
-            <li className="nav-link">
-              <NavLink className="nav-link" to="/cart" target="_blank">
-                Cart ({cartState.cartItems.length})
+            <li className="nav-item">
+              <NavLink
+                className="nav-link btn btn-light text-danger px-3 py-1"
+                to="/cart"
+              >
+                Cart (
+                {cartState?.cartItems?.reduce(
+                  (sum, item) => sum + item.quantity,
+                  0
+                ) || 0}
+                )
               </NavLink>
             </li>
           </ul>

@@ -14,7 +14,7 @@ export default function App() {
       <Router>
         <div className="App">
           <Header />
-          <main className="container m-4">
+          <main className="m-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/menu" element={<Menu />} />
