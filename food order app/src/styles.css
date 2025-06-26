@@ -33,6 +33,11 @@ body {
   margin: 0;
 }
 
+
+.product img{
+ width:100%;
+
+}
 @media (max-width: 768px) {
   main {
     flex-direction: column-reverse;
