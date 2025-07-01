@@ -23,6 +23,21 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  const deleteTaskHandler = async (taskObj) => {
+    try {
+      const response = await axios.post(
+        "https://keeper-app-1199-default-rtdb.firebaseio.com/tasks.json",
+        taskObj
+      );
+      const newTaskObj = { id: response.data.name, ...taskObj };
+      setToDoList((prevTasks) => {
+        return [newTaskObj, ...prevTasks];
+      });
+    } catch (err) {
+      setError(err);
+    }
+  };
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
