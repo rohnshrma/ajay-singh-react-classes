@@ -62,20 +62,6 @@ export const TaskProvider = ({ children }) => {
     fetchTasks();
   }, []);
 
-  const deleteTaskHandler = async (delete_id) => {
-    try {
-      await axios.delete(
-        `https://keeper-app-1199-default-rtdb.firebaseio.com/tasks/${delete_id}.json`
-      );
-      setToDoList((prevTask) => {
-        console.log("updating state afte deletion");
-        return prevTask.filter((task) => task.id !== delete_id);
-      });
-    } catch (err) {
-      console.log("Delete Error", err);
-      setError(err);
-    }
-  };
   const filteredTasks =
     filter === "all"
       ? toDoList
